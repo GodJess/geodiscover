@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/App.css';
+import Header from './Header';
 
 const UserProfile = () => {
   const [user, setUser] = useState(null);
@@ -99,32 +100,53 @@ const UserProfile = () => {
     fetchUserData();
   }, [navigate]);
 
-  const handleAvatarChange = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const newAvatar = reader.result;
-        setAvatar(newAvatar);
-        updateAvatar(newAvatar);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleAvatarChange = async (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const newAvatar = reader.result;
+  //       setAvatar(newAvatar);
+  //       updateAvatar(newAvatar);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
-  const updateAvatar = async (newAvatar) => {
-    try {
-      const updatedUser = { ...user, avatar: newAvatar };
-      await axios.put(`http://localhost:3000/users/${user.id}`, updatedUser);
-      setUser(updatedUser);
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-    } catch (error) {
-      console.error('Ошибка при обновлении аватара:', error);
+const handleAvatarChange = async (e) => {
+    const file = e.target.files[0];
+    if (file && user) {
+      try {
+        const formData = new FormData();
+        formData.append('avatar', file);
+
+        const response = await axios.post(
+          `http://127.0.0.1:8000/update-avatar/${user.id}/`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        );
+
+        // Обновляем данные пользователя
+        let updatedUser = response.data
+        setUser(updatedUser);
+        localStorage.removeItem('user')
+        localStorage.setItem('user', JSON.stringify(user));
+        setAvatar(response.data.avatar);
+
+      } catch (error) {
+        console.error('Ошибка при обновлении аватара:', error);
+        alert('Не удалось обновить аватар. Пожалуйста, попробуйте снова.');
+      }
     }
   };
 
   const handleLogout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('userId')
     navigate('/');
   };
 
@@ -137,10 +159,11 @@ const UserProfile = () => {
   if (!user) return <div>Пользователь не найден</div>;
 
   return (
+    <div className="topic-page">
+            <Header />
     <div className="profile-container">
       <div className="profile-header">
         <h1>Личный кабинет</h1>
-        <button onClick={handleLogout} className="logout-btn">Выйти</button>
       </div>
       
       <div className="profile-info">
@@ -198,6 +221,7 @@ const UserProfile = () => {
           <p>Активность не найдена</p>
         )}
       </div>
+    </div>
     </div>
   );
 };

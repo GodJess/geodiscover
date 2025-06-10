@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 
 const Header = ()=>{
 
     const[userCheck, setUserCheck] = useState(localStorage.getItem('userId'))
     const [state, setState] = useState(true)
+
+    const navigate = useNavigate();
+
     useEffect(()=>{
         setUserCheck(localStorage.getItem('userId'))
     }, [state])
@@ -30,6 +34,7 @@ const Header = ()=>{
                     localStorage.removeItem('userId')
                     localStorage.removeItem('user')
                     setState(false)
+                    navigate('/')
                 }} className="auth-btn">Выйти</a>
                 <a href="/profile" className="auth-btn">Профиль</a>
           </div>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../styles/App.css'
-
+import '../styles/App.css';
+import './Auth.css'
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -22,30 +22,42 @@ const Auth = () => {
     try {
       if (isLogin) {
         // Логика входа
-        const response = await axios.get('http://localhost:3000/users');
-        const user = response.data.find(u => u.email === formData.email && u.password === formData.password);
-        if (user) {
+        const response = await axios.post('http://127.0.0.1:8000/login/', {
+          email: formData.email,
+          password: formData.password
+        });
+        
+        const user = response.data;
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('userId', user.id);
+        navigate('/profile');
+      } else {
+        // Логика регистрации
+        const response = await axios.post('http://127.0.0.1:8000/register/', {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password
+        });
+        
+        if(response.data != null){
+          const user = response.data;
+
           localStorage.setItem('user', JSON.stringify(user));
           localStorage.setItem('userId', user.id);
           navigate('/profile');
-        } else {
-          alert('Неверные учетные данные');
         }
-      } else {
-        // Логика регистрации
-        const newUser = {
-          ...formData,
-          id: Date.now(),
-          avatar: `https://randomuser.me/api/portraits/${Math.random() > 0.5 ? 'men' : 'women'}/${Math.floor(Math.random() * 50)}.jpg`,
-          joined: new Date().toISOString().split('T')[0]
-        };
-        await axios.post('http://localhost:3000/users', newUser);
-        localStorage.setItem('user', JSON.stringify(newUser));
-        navigate('/profile');
+
       }
     } catch (error) {
       console.error('Ошибка:', error);
+      alert(error.response?.data?.error || 'Произошла ошибка. Пожалуйста, попробуйте снова.');
     }
+  };
+
+  const switchForm = (e, isLoginForm) => {
+    e.preventDefault();
+    setIsLogin(isLoginForm);
+    setFormData({ email: '', password: '', name: '' });
   };
 
   return (
@@ -56,7 +68,7 @@ const Auth = () => {
       </div>
       
       {isLogin ? (
-        <div id="loginForm">
+        <div className="auth-form" id="loginForm">
           <h1>Вход в аккаунт</h1>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -85,61 +97,80 @@ const Auth = () => {
               />
             </div>
             
-            <button type="submit" className="btn">Войти</button>
+            <button type="submit" className="btn btn-primary">Войти</button>
           </form>
           
           <div className="switch-form">
-            Нет аккаунта? <a href="#" onClick={() => setIsLogin(false)}>Зарегистрироваться</a>
+            Нет аккаунта?{' '}
+            <button 
+              type="button" 
+              className="link-btn" 
+              onClick={(e) => switchForm(e, false)}
+            >
+              Зарегистрироваться
+            </button>
           </div>
         </div>
       ) : (
-        <div id="registerForm">
-          <h1>Создать аккаунт</h1>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="regName">Имя</label>
-              <input 
-                type="text" 
-                id="regName" 
+        <div className="register-form">
+          <h1 className="register-form__title">Создать аккаунт</h1>
+          <form className="register-form__content" onSubmit={handleSubmit}>
+            <div className="register-form__field">
+              <label className="register-form__label" htmlFor="regName">Имя</label>
+              <input
+                className="register-form__input"
+                type="text"
+                id="regName"
                 name="name"
-                placeholder="Ваше имя" 
+                placeholder="Ваше имя"
                 required
                 value={formData.name}
                 onChange={handleChange}
               />
             </div>
             
-            <div className="form-group">
-              <label htmlFor="regEmail">Email</label>
-              <input 
-                type="email" 
-                id="regEmail" 
+            <div className="register-form__field">
+              <label className="register-form__label" htmlFor="regEmail">Email</label>
+              <input
+                className="register-form__input"
+                type="email"
+                id="regEmail"
                 name="email"
-                placeholder="Ваш email" 
+                placeholder="Ваш email"
                 required
                 value={formData.email}
                 onChange={handleChange}
               />
             </div>
             
-            <div className="form-group">
-              <label htmlFor="regPassword">Пароль</label>
-              <input 
-                type="password" 
-                id="regPassword" 
+            <div className="register-form__field">
+              <label className="register-form__label" htmlFor="regPassword">Пароль</label>
+              <input
+                className="register-form__input"
+                type="password"
+                id="regPassword"
                 name="password"
-                placeholder="Придумайте пароль" 
+                placeholder="Придумайте пароль"
                 required
                 value={formData.password}
                 onChange={handleChange}
               />
             </div>
             
-            <button type="submit" className="btn">Зарегистрироваться</button>
+            <button type="submit" className="btn btn-primary">
+              Зарегистрироваться
+            </button>
           </form>
           
-          <div className="switch-form">
-            Уже есть аккаунт? <a href="#" onClick={() => setIsLogin(true)}>Войти</a>
+          <div className="register-form__footer">
+            Уже есть аккаунт?{' '}
+            <button
+              type="button"
+              className="register-form__switch"
+              onClick={(e) => switchForm(e, true)}
+            >
+              Войти
+            </button>
           </div>
         </div>
       )}

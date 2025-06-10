@@ -351,8 +351,7 @@ footer {
     margin: 10px 0;
 }
 
-.auth-container button {
-    background: #333;
+.btn-primary{
     color: white;
     border: none;
     padding: 10px;
@@ -1199,4 +1198,15 @@ h1 {
     .user-stats {
       grid-template-columns: 1fr;
     }
+  }
+
+  .link-btn{
+    border: none;
+    background-color: none;
+    color:rgba(58, 86, 212, 0.5);
+    transition: all .3s ease;
+  }
+
+  .link-btn:hover{
+    color: #cc0000;
   }
