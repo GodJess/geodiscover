@@ -105,7 +105,7 @@ const Library = () => {
             <div className="article-content">
               <h3>{article.title}</h3>
               <p>{article.content}</p>
-              <a href="#" className="read-more">Читать далее →</a>
+              <a href="https://traveller-eu.ru/sankt-peterburg" className="read-more">Читать далее →</a>
             </div>
           </div>
         ))}
