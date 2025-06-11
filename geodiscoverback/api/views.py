@@ -60,16 +60,26 @@ def topics_api(request):
         return Response(serializer.data)
     
     elif request.method == 'POST':
-        serializer = TopicSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+        title = request.data.get('title')
+        content = request.data.get('content')
+        author = request.data.get('author')
+        view = request.data.get('views')
+        comments_count = request.data.get('comments_count')
+        created = request.data.get('created')
+        tags = request.data.get('tags')
+
+        author_id = NewUsers.objects.get(id=author)
+
+        topic_count = Topic.objects.all().count()
+
+        new_topic = Topic.objects.create(id = topic_count + 1,title = title, author = author_id, views = view, comments_count = comments_count, created = created, tags = tags, content = content)
+        
+        return Response(TopicSerializer(new_topic, many= False).data, status=201)
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def topic_detail_api(request, pk):
     try:
-        topic = Topic.objects.get(pk=pk)
+        topic = Topic.objects.get(id=pk)
     except Topic.DoesNotExist:
         return Response(status=404)
     
@@ -262,6 +272,11 @@ def register_user(request):
         )
     return Response({})
 
+
+@api_view(["GET"])
+def get_user(request):
+    if request.method == "GET":
+        return Response(NewUserSerial(NewUsers.objects.all(), many = True, context={"request": request}).data, status=200)
 
 @api_view(['POST'])
 def login_user(request):

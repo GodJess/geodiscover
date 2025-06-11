@@ -18,5 +18,6 @@ urlpatterns = [
     path('comments/<int:pk>/', views.comment_detail_api),
     path('register/', views.register_user, name='register'),
     path('login/', views.login_user, name='login'),
+    path('getUser/', views.get_user, name = "get_user"),
     path('update-avatar/<int:user_id>/', views.update_avatar, name='update-avatar'),
 ]

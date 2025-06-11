@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/App.css';
@@ -28,7 +28,7 @@ const Forum = () => {
       try {
         const [topicsRes, usersRes] = await Promise.all([
           axios.get('http://localhost:3000/topics'),
-          axios.get('http://localhost:3000/users')
+          axios.get('http://127.0.0.1:8000/getUser/')
         ]);
         setTopics(topicsRes.data.sort((a, b) => new Date(b.created) - new Date(a.created)));
         setUsers(usersRes.data);
@@ -270,4 +270,4 @@ const Forum = () => {
   );
 };
 
-export default Forum;
+export default Forum

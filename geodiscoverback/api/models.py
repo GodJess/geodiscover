@@ -17,13 +17,28 @@ class User(models.Model):
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
 
+
+class NewUsers(models.Model):
+    name = models.CharField("name", max_length=100)
+    email = models.CharField("email", max_length=30)
+    password = models.CharField("password", max_length=30)
+    avatar = models.ImageField(upload_to= "images/", blank= True, default="images/avatar.jpg", null=True)
+    joined = models.DateField("Дата регистрации")
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = "НовыйПользователь"
+        verbose_name_plural = "НовыеПользователи"
+
 class Topic(models.Model):
     id = models.CharField('ID', max_length=100, primary_key=True)
     title = models.CharField('Заголовок', max_length=200)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='topics')
+    author = models.ForeignKey(NewUsers, on_delete=models.CASCADE, related_name='topics')
     views = models.PositiveIntegerField('Просмотры', default=0)
     comments_count = models.PositiveIntegerField('Комментарии', default=0)
-    created = models.CharField('Дата создания', max_length=20)
+    created = models.DateField('Дата создания')
     tags = models.JSONField('Теги', default=list)
     content = models.TextField('Содержание')
     
@@ -98,16 +113,3 @@ class Comment(models.Model):
         verbose_name = "Комментарий"
         verbose_name_plural = "Комментарии"
 
-class NewUsers(models.Model):
-    name = models.CharField("name", max_length=100)
-    email = models.CharField("email", max_length=30)
-    password = models.CharField("password", max_length=30)
-    avatar = models.ImageField(upload_to= "images/", blank= True, default="images/avatar.jpg", null=True)
-    joined = models.DateField("Дата регистрации")
-
-    def __str__(self):
-        return self.name
-    
-    class Meta:
-        verbose_name = "НовыйПользователь"
-        verbose_name_plural = "НовыеПользователи"
