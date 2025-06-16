@@ -1,0 +1,438 @@
+/* Forum.css */
+
+/* .forum-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f8fa;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+} */
+
+.forum-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.forum-header h1 {
+  color: #1da1f2;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.new-topic-btn {
+  background-color: #1da1f2;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.new-topic-btn:hover {
+  background-color: #1991db;
+}
+
+.new-topic-form {
+  background-color: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.new-topic-form h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #1da1f2;
+}
+
+.new-topic-form input,
+.new-topic-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.new-topic-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.form-buttons button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form-buttons button:first-child {
+  background-color: #1da1f2;
+  color: white;
+  border: none;
+}
+
+.form-buttons button:first-child:hover {
+  background-color: #1991db;
+}
+
+.form-buttons button:last-child {
+  background-color: white;
+  color: #1da1f2;
+  border: 1px solid #1da1f2;
+}
+
+.form-buttons button:last-child:hover {
+  background-color: #eaf5fd;
+}
+
+.topics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.topic {
+  background-color: white;
+  border-radius: 16px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s;
+}
+
+.topic:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.topic-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.topic-author-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.author-avatar-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.author-name {
+  font-weight: bold;
+  color: #14171a;
+}
+
+.topic-date {
+  color: #657786;
+  font-size: 14px;
+  margin-left: auto;
+}
+
+.topic-main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.topic-title {
+  margin: 0;
+  font-size: 18px;
+  color: #14171a;
+}
+
+.topic-text {
+  margin: 0;
+  font-size: 15px;
+  color: #14171a;
+  line-height: 1.4;
+}
+
+.topic-image-container {
+  margin-top: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.topic-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.topic-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.topic-tag {
+  color: #1da1f2;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.topic-tag:hover {
+  text-decoration: underline;
+}
+
+.topic-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #e1e8ed;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  color: #657786;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.action-btn:hover {
+  background-color: #f5f8fa;
+}
+
+.view-count {
+  cursor: default;
+}
+
+.view-count:hover {
+  background: none;
+}
+
+.delete-btn {
+  color: #e0245e;
+  margin-left: auto;
+}
+
+.topic-comments-section {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e1e8ed;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.comment {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  background-color: #f5f8fa;
+}
+
+.comment-author {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 60px;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.comment-author-name {
+  font-size: 12px;
+  font-weight: bold;
+  color: #14171a;
+  text-align: center;
+}
+
+.comment-content {
+  flex: 1;
+}
+
+.comment-text {
+  margin: 0;
+  font-size: 14px;
+  color: #14171a;
+  line-height: 1.4;
+}
+
+.comment-date {
+  display: block;
+  font-size: 12px;
+  color: #657786;
+  margin-top: 5px;
+}
+
+.no-comments {
+  color: #657786;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+}
+
+.add-comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.add-comment-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  font-size: 14px;
+  min-height: 60px;
+  resize: vertical;
+}
+
+.send-comment-btn {
+  align-self: flex-end;
+  background-color: #1da1f2;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.send-comment-btn:hover {
+  background-color: #1991db;
+}
+
+.no-topics {
+  text-align: center;
+  padding: 40px;
+  color: #657786;
+  font-size: 16px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 30px;
+}
+
+.page-link {
+  background-color: white;
+  border: 1px solid #e1e8ed;
+  color: #1da1f2;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.page-link:hover {
+  background-color: #eaf5fd;
+}
+
+.page-link.active {
+  background-color: #1da1f2;
+  color: white;
+  border-color: #1da1f2;
+}
+
+
+
+/* Адаптивность */
+@media (max-width: 600px) {
+  /* .forum-container {
+    padding: 10px;
+  }
+   */
+  .forum-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  
+  .topic-author-info {
+    flex-wrap: wrap;
+  }
+  
+  .comment {
+    flex-direction: column;
+  }
+  
+  .comment-author {
+    flex-direction: row;
+    align-items: center;
+    min-width: auto;
+  }
+}
+
+.forum-content {
+  max-width: 70%; /* 2/3 ширины */
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Если вам нужно ограничить максимальную ширину */
+@media (min-width: 1200px) {
+  .forum-content {
+    max-width: 1000px; /* или любое другое значение */
+  }
+}
+
+/* Остальные существующие стили оставляем без изменений */
+
+.topics-list {
+  width: 100%;
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .topics-list {
+    max-width: 100%;
+  }
+}
